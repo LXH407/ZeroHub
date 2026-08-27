@@ -1,0 +1,67 @@
+# ZeroHub .dockerignore（防止把 Windows 本地 EXE / 7z / 缓存打进镜像导致 1GB+）
+# Dockerfile COPY 会自动忽略这些
+
+# --- Node ---
+node_modules/
+*/node_modules/
+.npm
+.cache
+
+# --- 构建产物（容器内 Stage1-2 重新构建，不要本地的）---
+admin-web/dist/
+client/dist/
+client/.tmp/
+client/release/
+client/build/
+client/electron/
+server/dist/
+server/.pkg-cache/
+server/pkg-native/
+server/sfx-stage/
+server/zerohub-server-cache/
+
+# --- 交付包 / EXE（千万不要打进镜像！）---
+build-output/
+build/
+*.exe
+*.7z
+*.zip
+*.msi
+*.blockmap
+builder-debug.yml
+
+# --- 数据库 & 上传资源（容器内持久卷挂，不要本地的）---
+server/data/
+server/data_backup_*/
+server/uploads/*
+!server/uploads/.gitkeep
+*.db
+*.db-wal
+*.db-shm
+
+# --- 日志 ---
+*.log
+server-dev*.log
+sfx-*.log
+7za-*.log
+electron-builder*.log
+npm-debug.log*
+
+# --- IDE / 系统 / Git ---
+.git/
+.gitignore
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- 环境变量/隐私 ---
+.env
+.env.*
+!.env.example
+
+# --- 临时备份子目录 ---
+ZeroHub/
+Backup*/
+backup*/

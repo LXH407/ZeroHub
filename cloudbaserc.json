@@ -1,0 +1,73 @@
+{
+  "$schema": "https://framework-1258016615.tcloudbaseapp.com/schema.json",
+  "envId": "{{env.ENV_ID}}",
+  "version": "2.0",
+  "functionRoot": "functions",
+  "framework": {
+    "name": "zerohub",
+    "plugins": {
+      "server": {
+        "use": "@cloudbase/framework-plugin-container",
+        "inputs": {
+          "name": "zerohub-server",
+          "serviceName": "zerohub-server",
+          "servicePath": "/",
+          "cpu": 0.5,
+          "mem": 1.0,
+          "minNum": 1,
+          "maxNum": 1,
+          "policy": "cpu_mem_util",
+          "containerPort": 3000,
+          "buildDir": ".",
+          "dockerfilePath": "./Dockerfile",
+          "uploadType": "package",
+          "customLogs": "stdout",
+          "healthChecks": {
+            "http": {
+              "path": "/api/health",
+              "port": 3000,
+              "intervalSeconds": 15,
+              "timeoutSeconds": 5,
+              "initialDelaySeconds": 10,
+              "healthyThreshold": 2,
+              "unhealthyThreshold": 3
+            }
+          },
+          "volumeMounts": [
+            {
+              "name": "zerohub-sqlite-data",
+              "mountPath": "/app/server/data",
+              "readOnly": false
+            }
+          ],
+          "envVariables": {
+            "NODE_ENV": "production",
+            "HOST": "0.0.0.0",
+            "PORT": "3000",
+            "CLOUDBASE_ENV_ID": "{{env.ENV_ID}}",
+            "USE_PERSISTENT_SQLITE": "true"
+          },
+          "secrets": [
+            {
+              "name": "JWT_SECRET",
+              "valueFrom": "/zerohub/jwt_secret"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "containers": [
+    {
+      "name": "zerohub-server",
+      "volumeClaimTemplates": [
+        {
+          "name": "zerohub-sqlite-data",
+          "storageClassName": "cbs-premium-ssd",
+          "accessModes": ["ReadWriteOnce"],
+          "storage": "10Gi"
+        }
+      ]
+    }
+  ]
+}
