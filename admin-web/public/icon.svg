@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+    <linearGradient id="knot" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0ecff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 圆角底板（rx=64，512画布 -> 适当圆角） -->
+  <rect x="0" y="0" width="512" height="512" rx="64" ry="64" fill="url(#bg)"/>
+
+  <!-- Triquetra 凯尔特三结体（三个互锁弧），整体居中，描边宽度36，留白12的"剪影"感 -->
+  <g transform="translate(256 260)" fill="none" stroke="url(#knot)" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+    <!-- 上结弧 -->
+    <path d="M 0 -160 A 160 160 0 0 1 138.56 80 L -69.28 -40 A 80 80 0 0 0 0 80 L 69.28 -40 A 80 80 0 0 1 -138.56 80 A 160 160 0 0 1 0 -160 Z"/>
+    <!-- 左下结弧 -->
+    <path d="M -152 88 A 160 160 0 0 1 -19.28 -140.6 L -9.28 60.62 A 80 80 0 0 0 -120 48 L 40 -8 A 80 80 0 0 1 58.56 129.28 A 160 160 0 0 1 -152 88 Z"/>
+    <!-- 右下结弧 -->
+    <path d="M 152 88 A 160 160 0 0 1 19.28 -140.6 L 9.28 60.62 A 80 80 0 0 1 120 48 L -40 -8 A 80 80 0 0 0 -58.56 129.28 A 160 160 0 0 1 152 88 Z"/>
+    <!-- 中心三角加强 -->
+    <path d="M 0 -72 L 62.35 36 L -62.35 36 Z" fill="none" stroke="url(#knot)" stroke-width="28" stroke-linejoin="round"/>
+  </g>
+
+  <!-- 中心小点增加细节感 -->
+  <circle cx="256" cy="260" r="10" fill="#ffffff" opacity="0.85"/>
+</svg>

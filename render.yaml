@@ -1,0 +1,49 @@
+# ============================================================
+#  ZeroHub 后端 + 管理后台 一键 Render 部署配置
+#  使用方法：
+#   1. 将整个项目（根目录，包含 server/ 和 admin-web/）推送到 GitHub 仓库
+#   2. 登录 https://render.com  →  New +  →  Web Service
+#   3. 选择"Public Git repository" 或连接你的 GitHub 账户选中该仓库
+#   4. Runtime 选 Node，Branch 选 main，其他按本文件自动填充（或手动填下方内容）
+#   5. Environment Variables 里新增 JWT_SECRET（建议 Generate 随机值，不要用默认）
+#   6. 部署完成后，客户端的"服务器地址配置"填入 Render 分配的 onrender.com 域名
+#  ⚠️ 重要：Render 免费 Web Service 磁盘是临时的，重启后 SQLite 数据会丢失。
+#     如需数据持久化：
+#      - 方案1：在 Render 后台为该服务挂载付费磁盘（$1/月起），环境变量加
+#               DB_PATH=/var/data/zerohub.db
+#      - 方案2：将 SQLite 替换为 PostgreSQL（Render 免费提供 Postgres 实例）
+# ============================================================
+services:
+  - type: web
+    name: zerohub-server
+    runtime: node
+    # TODO: 将下方地址替换为你自己的 GitHub 仓库地址
+    # 例：https://github.com/你的用户名/ZeroHub
+    repo: https://github.com/your-username/ZeroHub
+    branch: main
+    plan: free                        # 免费方案（750小时/月，闲置5分钟休眠，访问自动唤醒）
+    rootDir: .                        # 项目根（包含 server/ 与 admin-web/）
+    buildCommand: |
+      echo ">>> 1/3 安装后端依赖"
+      cd server && npm install --omit=dev
+      echo ">>> 2/3 安装管理后台依赖"
+      cd ../admin-web && npm install --omit=dev
+      echo ">>> 3/3 构建管理后台 dist（自动挂载到 /admin 路径）"
+      npm run build
+      echo "✅ 构建完成"
+    startCommand: cd server && node server.js
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: NODE_ENV
+        value: production
+      # ⚠️ 生产环境务必使用随机强密钥（首次部署时点击 Generate 按钮即可）
+      - key: JWT_SECRET
+        generateValue: true
+      # （可选）如果挂载了 Render 持久化磁盘，取消下方注释并改成磁盘挂载路径
+      # - key: DB_PATH
+      #   value: /var/data/zerohub.db
+    autoDeploy: yes
+    # Render 健康检查路径（与 server.js 保持一致）
+    healthCheckPath: /api/health
+    pullRequestPreviewsEnabled: no

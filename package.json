@@ -1,0 +1,19 @@
+{
+  "name": "zero-hub-software-mall",
+  "version": "1.0.0",
+  "description": "ZeroHub软件商城系统 - 包含API中转站、大模型、软件、游戏下载平台",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix admin-web install && npm --prefix client install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:admin": "npm --prefix admin-web run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build:admin": "npm --prefix admin-web run build",
+    "build:client": "npm --prefix client run build",
+    "build:server": "npm --prefix server run build",
+    "start:server": "npm --prefix server start"
+  },
+  "keywords": ["software-mall", "electron", "vue3", "nodejs"],
+  "author": "ZeroHub",
+  "license": "MIT"
+}

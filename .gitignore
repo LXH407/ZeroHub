@@ -1,0 +1,68 @@
+# ==================================
+# ZeroHub — 上传 GitHub 专用 .gitignore
+# （源码上传 / 构建产物、大文件、数据库全部忽略）
+# ==================================
+
+# --- 依赖 & Node 通用 ---
+node_modules/
+*.log
+.npm
+.DS_Store
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+Desktop.ini
+
+# --- 环境变量与密钥 ---
+.env
+.env.local
+.env.*.local
+
+# --- ZeroHub：所有 Vite 构建产物 / 前端 dist ---
+# (admin-web/dist, client/dist 均匹配)
+dist/
+.tmp/
+.cache/
+
+# --- ZeroHub：Electron 打包产物（客户端 release + 7za 临时） ---
+release/
+win-unpacked/
+builder-debug.yml
+*.blockmap
+electron-builder*.log
+
+# --- ZeroHub：客户端构建缓存（node-compile-cache 几千个小文件） ---
+client/.tmp/
+client/node-compile-cache/
+
+# --- ZeroHub：后端打包 / 缓存 / 便携EXE（~290MB 禁止上传 GitHub） ---
+server/dist/
+server/.pkg-cache/
+server/pkg-native/
+server/sfx-stage/
+server/zerohub-server-cache/
+server/data_backup_*/
+server/data/zerohub.db
+server/data/zerohub.db-*
+server/uploads/*
+!server/uploads/.gitkeep
+server/7za.exe
+
+# --- ZeroHub：build-output（最终交付3个EXE+deploy，用 GitHub Releases 而不是仓库） ---
+build-output/
+*.7z
+*.zip
+*.exe
+
+# --- ZeroHub：7za/SFX 临时日志 ---
+7za-*.log
+sfx-*.log
+server-dev*.log
+
+# --- ZeroHub：零层备份/临时子目录（根目录下 d:\ZeroHub\ZeroHub\） ---
+ZeroHub/
+Backup*/
+backup*/
+
+# --- 保留：所有 package.json / package-lock.json 及源码 src/ 永远上传 ---

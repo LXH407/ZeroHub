@@ -1,0 +1,45 @@
+{
+  "name": "zero-hub-server",
+  "version": "1.0.0",
+  "description": "ZeroHub软件商城后端服务",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "pkg . --targets node18-win-x64 --output dist/zero-hub-server.exe"
+  },
+  "bin": "launcher.js",
+  "pkg": {
+    "assets": [
+      "node_modules/better-sqlite3/build/Release/better_sqlite3.node",
+      "node_modules/better-sqlite3/prebuilds/**/*.node",
+      "uploads/**/*",
+      "public/**/*",
+      "../admin-web/dist/**/*",
+      "pkg-native/**/*",
+      "7za.exe",
+      "sfx-stage/server-full.7z"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ],
+    "scripts": "server.js",
+    "outputPath": "dist"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "pkg": "^5.8.1"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true
+  }
+}

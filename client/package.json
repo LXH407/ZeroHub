@@ -1,0 +1,73 @@
+{
+  "name": "zero-hub-client",
+  "version": "1.0.0",
+  "description": "ZeroHub 软件商城客户端",
+  "main": "electron/main.js",
+  "author": "ZeroHub",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5174 && electron .\"",
+    "dev:vite": "vite",
+    "dev:electron": "electron .",
+    "build": "vite build && electron-builder",
+    "build:dir": "vite build && electron-builder --dir",
+    "build:win": "vite build && electron-builder --win --x64"
+  },
+  "dependencies": {
+    "axios": "^1.7.3",
+    "element-plus": "^2.8.0",
+    "@element-plus/icons-vue": "^2.3.1",
+    "pinia": "^2.2.1",
+    "vue": "^3.4.38",
+    "vue-router": "^4.4.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "concurrently": "^8.2.2",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "vite": "^5.4.1",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.zerohub.client",
+    "productName": "ZeroHub",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "ZeroHub 软件商城"
+    }
+  },
+  "allowScripts": {
+    "vue-demi@0.14.10": true,
+    "esbuild@0.21.5": true,
+    "electron@31.7.7": true
+  }
+}

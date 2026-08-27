@@ -1,0 +1,124 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  height: 100%;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
+    'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: #ffffff;
+  color: #333333;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #dcdfe6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c0c4cc;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 白色简约主题 */
+.zh-page {
+  height: 100%;
+  background: #ffffff;
+}
+
+.zh-card {
+  background: #ffffff;
+  border: 1px solid #ebeef5;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+}
+.zh-card:hover {
+  border-color: #c6e2ff;
+  box-shadow: 0 4px 16px rgba(64, 158, 255, 0.12);
+}
+
+.zh-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: #fff;
+}
+.zh-btn-primary:hover {
+  opacity: 0.9;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.zh-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+}
+.zh-tag-software { background: #ecf5ff; color: #409eff; }
+.zh-tag-model { background: #f0f9eb; color: #67c23a; }
+.zh-tag-game { background: #fdf6ec; color: #e6a23c; }
+.zh-tag-api { background: #fef0f0; color: #f56c6c; }
+
+.zh-divider {
+  height: 1px;
+  background: #f2f3f5;
+  margin: 16px 0;
+}
+
+/* 拖拽条（窗口控制） */
+.drag-bar {
+  -webkit-app-region: drag;
+  height: 36px;
+  flex-shrink: 0;
+}
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* 页面过渡动画 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.v-center {
+  display: flex;
+  align-items: center;
+}
+.h-center {
+  display: flex;
+  justify-content: center;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
