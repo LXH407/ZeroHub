@@ -35,9 +35,9 @@ RUN apk add --no-cache libgcc libstdc++ tini
 
 WORKDIR /app
 
-# 拷贝 admin-web 构建产物
+# 拷贝 admin-web 构建产物（注意：COPY 是 Docker 原生命令，不支持 shell 管道语法 2>/dev/null||true，禁止加 fallback 避免解析 /|| checksum 失败）
 COPY --from=builder /app/admin-web/dist   ./admin-web/dist
-COPY admin-web/public                    ./admin-web/public 2>/dev/null || true
+COPY admin-web/public                    ./admin-web/public
 
 # 拷贝 server 源码 + 生产 node_modules
 COPY --from=server-deps /app/server/node_modules  ./server/node_modules
@@ -49,9 +49,9 @@ COPY server/uploads     ./server/uploads
 COPY server/*.js        ./server/
 COPY server/package*.json ./server/
 
-# deploy / AI_PROMPT / DEPLOY / render.yaml 拷贝到根方便用户查看（非必须）
-COPY deploy/             ./deploy/ 2>/dev/null || true
-COPY DEPLOY.md AI_PROMPT.md render.yaml package.json ./ 2>/dev/null || true
+# deploy / AI_PROMPT / DEPLOY / render.yaml 拷贝到根方便用户查看（非必须，但确定存在，不要加 shell fallback）
+COPY deploy/             ./deploy/
+COPY DEPLOY.md AI_PROMPT.md render.yaml package.json ./
 
 # --- 环境变量（CloudBase 通过 cloudbaserc.json 注入，这里给默认兜底）---
 ENV NODE_ENV=production
